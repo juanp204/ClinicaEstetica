@@ -27,7 +27,7 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 
 //DB
-const conectado = require('./database/mysql.js');
+const conectado = require('./database/mysql');
 //const req = require('express/lib/request');
 
 //recursos

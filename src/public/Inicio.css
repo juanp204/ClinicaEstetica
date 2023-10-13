@@ -1241,19 +1241,23 @@
 }
 
 .u-section-7 .u-btn-1 {
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 0.875rem;
-  background-image: none;
-  font-weight: 400;
-  border-style: solid;
   --animation-custom_in-translate_x: 0px;
   --animation-custom_in-translate_y: 0px;
   --animation-custom_in-opacity: 0;
   --animation-custom_in-rotate: 0deg;
   --animation-custom_in-scale: 0.3;
+  border-style: solid;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: 1px;
   margin: 50px auto 60px;
   padding: 10px 55px 10px 54px;
+}
+
+@media (max-width: 1199px) {
+  .u-section-7 .u-btn-1 {
+    font-weight: 400;
+  }
 }
 
 @media (max-width: 767px) {

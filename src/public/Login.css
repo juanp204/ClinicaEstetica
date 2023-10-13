@@ -7,13 +7,19 @@
 }
 
 .u-section-1 .u-form-1 {
-  height: 107px;
-  width: 570px;
-  margin: 102px auto 60px;
+  height: 108px;
+  width: 544px;
+  margin: 73px auto 60px;
 }
 
 .u-section-1 .u-btn-1 {
   background-image: none;
+}
+
+@media (max-width: 1199px) {
+  .u-section-1 .u-form-1 {
+    width: 570px;
+  }
 }
 
 @media (max-width: 767px) {
