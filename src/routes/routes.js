@@ -13,6 +13,10 @@ console.log(rootdir)
 
 router.get('/', async (req, res) => {
     //res.render(path.join(route,'views/index.html'));
+    const user_CK = req.session.user
+    const id = req.session.tipeuser
+
+
     res.sendFile('/views/index.html', { root: rootdir })
 });
 router.get('/login.html', async (req, res) => {
@@ -49,17 +53,17 @@ router.get('/appointment.html', async (req, res) => {
 });
 
 router.post('/auth', async (req, res) => {
-    const users = req.session.user
+    const user_CK = req.session.user
     const id = req.session.tipeuser
     const user = req.body.user;
     const pass = req.body.pass;
     console.log(user)
     if (user != "" && pass != "") {
-        conectado.query('SELECT * FROM usuario WHERE us_nickname = ? AND tipo_usuario_id_tu <> 6', [user], (error, results) => {
+        conectado.query('SELECT correo,passwd,tipousuario_idtipousuario FROM usuarios WHERE correo = ? ', [user], (error, results) => {
             console.log(results)
             if (error || results.length == 0 || pass != results[0].us_pass) {
-                res.render(path.join(route, 'views/init.html'), {
-                    us: users,
+                res.render(path.join(rootdir, 'views/Login.html'), {
+                    us: user_CK,
                     id: id,
                     alert: true,
                     alertTitle: "Error",
@@ -80,7 +84,7 @@ router.post('/auth', async (req, res) => {
     }
     else {
         res.render(path.join(route, 'views/init.html'), {
-            us: users,
+            us: user_CK,
             id: id,
             alert: true,
             alertTitle: "Error",
