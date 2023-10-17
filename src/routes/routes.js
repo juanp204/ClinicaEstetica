@@ -52,6 +52,56 @@ router.get('/appointment.html', async (req, res) => {
     res.sendFile('/views/appointment.html', { root: rootdir })
 });
 
+
+router.post('/register', async (req, res) => {
+    const email = req.body.email;
+    const name = req.body.name;
+    const lastn = req.body.apellido;
+    const pass = req.body.pass;
+    if (email != "" || name != "" || pass != "") {
+        conectado.query('SELECT * FROM usuarios WHERE correo = ?', [email], async (error, results) => {
+            if (results.length == 0) {
+                conectado.query('INSERT INTO usuarios SET ?', { correo: email, nombres: name, apellidos: lastn, passwd: pass }, async (error, result) => {
+                    if (error) {
+                        console.log(error)
+                        res.render(path.join(rootdir, 'views/registrar.html'), {
+                            alert: true,
+                            alertTitle: "Error",
+                            alertMessage: "ocurrio un error inesperado",
+                            alertIcon: "error",
+                            showConfirmButton: true,
+                            timer: false
+                        });
+                    }
+                    else {
+                        res.redirect("/Login.html");
+                    }
+                })
+            }
+            else {
+                res.render(path.join(rootdir, 'views/registrar.html'), {
+                    alert: true,
+                    alertTitle: "Error",
+                    alertMessage: "User ya ocupado",
+                    alertIcon: "error",
+                    showConfirmButton: true,
+                    timer: false
+                });
+            }
+        })
+    }
+    else {
+        res.render(path.join(rootdir, 'views/registrar.html'), {
+            alert: true,
+            alertTitle: "Error",
+            alertMessage: "Espacios vacios",
+            alertIcon: "error",
+            showConfirmButton: true,
+            timer: false
+        });
+    }
+})
+
 router.post('/auth', async (req, res) => {
     const user_CK = req.session.user
     const id = req.session.tipeuser
@@ -61,7 +111,7 @@ router.post('/auth', async (req, res) => {
     if (user != "" && pass != "") {
         conectado.query('SELECT correo,passwd,tipousuario_idtipousuario FROM usuarios WHERE correo = ? ', [user], (error, results) => {
             console.log(results)
-            if (error || results.length == 0 || pass != results[0].us_pass) {
+            if (error || results.length == 0 || pass != results[0].passwd) {
                 res.render(path.join(rootdir, 'views/Login.html'), {
                     us: user_CK,
                     id: id,
@@ -75,15 +125,14 @@ router.post('/auth', async (req, res) => {
             }
             else {
                 req.session.loggedin = true;
-                req.session.user = results[0].us_nickname;
-                req.session.tipeuser = results[0].tipo_usuario_id_tu;
-                req.session.userid = results[0].id_usuario;
+                req.session.user = results[0].correo;
+                req.session.tipeuser = results[0].tipousuario_idtipousuario;
                 res.redirect('/')
             }
         });
     }
     else {
-        res.render(path.join(route, 'views/init.html'), {
+        res.render(path.join(rootdir, 'views/Login.html'), {
             us: user_CK,
             id: id,
             alert: true,
