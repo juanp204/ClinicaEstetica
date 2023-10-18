@@ -16,26 +16,54 @@ router.get('/', async (req, res) => {
     const user_CK = req.session.user
     const id = req.session.tipeuser
 
-
     res.sendFile('/views/index.html', { root: rootdir })
 });
 router.get('/login.html', async (req, res) => {
     //res.render(path.join(route,'views/index.html'));
-    res.sendFile('/views/login.html', { root: rootdir })
+    res.render(path.join(rootdir, 'views/Login.html'))
 });
 router.get('/inicio.html', async (req, res) => {
     //res.render(path.join(route,'views/index.html'));
-    res.sendFile('/views/inicio.html', { root: rootdir })
+    //res.sendFile('/views/inicio.html', { root: rootdir })
+    res.redirect('/')
 });
 router.get('/servicios.html', async (req, res) => {
     //res.render(path.join(route,'views/index.html'));
-    res.sendFile('/views/servicios.html', { root: rootdir })
+    //res.sendFile('/views/servicios.html', { root: rootdir })
+
+    conectado.query('SELECT * FROM servicios', (error, results) => {
+        console.log(results)
+        if (error || results.length == 0) {
+
+            res.render(path.join(rootdir, 'views/servicios.html'), {
+                servicios: results,
+                alert: true,
+                alertTitle: "Error",
+                alertMessage: "Usuario y/o password incorrecta",
+                alertIcon: "error",
+                showConfirmButton: true,
+                timer: false
+            });
+
+        }
+        else {
+
+            res.render(path.join(rootdir, 'views/servicios.html'), {
+                servicios: results,
+                alert: true,
+                alertTitle: "Error",
+                alertMessage: "Usuario y/o password incorrecta",
+                alertIcon: "error",
+                showConfirmButton: true,
+                timer: false
+            });
+        }
+    });
+
+    //res.render(path.join(rootdir, 'views/Servicios.html'))
+
 });
 
-router.get('/usuario.html', async (req, res) => {
-    //res.render(path.join(route,'views/index.html'));
-    res.sendFile('/views/usuario.html', { root: rootdir })
-});
 
 router.get('/usuario.html', async (req, res) => {
     //res.render(path.join(route,'views/index.html'));
@@ -44,7 +72,7 @@ router.get('/usuario.html', async (req, res) => {
 
 router.get('/register.html', async (req, res) => {
     //res.render(path.join(route,'views/index.html'));
-    res.sendFile('/views/register.html', { root: rootdir })
+    res.render(path.join(rootdir, 'views/register.html'))
 });
 
 router.get('/appointment.html', async (req, res) => {
@@ -61,10 +89,10 @@ router.post('/register', async (req, res) => {
     if (email != "" || name != "" || pass != "") {
         conectado.query('SELECT * FROM usuarios WHERE correo = ?', [email], async (error, results) => {
             if (results.length == 0) {
-                conectado.query('INSERT INTO usuarios SET ?', { correo: email, nombres: name, apellidos: lastn, passwd: pass }, async (error, result) => {
+                conectado.query('INSERT INTO usuarios SET ?', { correo: email, nombres: name, apellidos: lastn, passwd: pass, tipousuario_idtipousuario: 2 }, async (error, result) => {
                     if (error) {
                         console.log(error)
-                        res.render(path.join(rootdir, 'views/registrar.html'), {
+                        res.render(path.join(rootdir, 'views/register.html'), {
                             alert: true,
                             alertTitle: "Error",
                             alertMessage: "ocurrio un error inesperado",
@@ -74,15 +102,15 @@ router.post('/register', async (req, res) => {
                         });
                     }
                     else {
-                        res.redirect("/Login.html");
+                        res.redirect('/login.html');
                     }
                 })
             }
             else {
-                res.render(path.join(rootdir, 'views/registrar.html'), {
+                res.render(path.join(rootdir, 'views/register.html'), {
                     alert: true,
                     alertTitle: "Error",
-                    alertMessage: "User ya ocupado",
+                    alertMessage: "email ya ocupado",
                     alertIcon: "error",
                     showConfirmButton: true,
                     timer: false
@@ -91,7 +119,7 @@ router.post('/register', async (req, res) => {
         })
     }
     else {
-        res.render(path.join(rootdir, 'views/registrar.html'), {
+        res.render(path.join(rootdir, 'views/register.html'), {
             alert: true,
             alertTitle: "Error",
             alertMessage: "Espacios vacios",
@@ -105,8 +133,9 @@ router.post('/register', async (req, res) => {
 router.post('/auth', async (req, res) => {
     const user_CK = req.session.user
     const id = req.session.tipeuser
-    const user = req.body.user;
-    const pass = req.body.pass;
+    const user = req.body.username;
+    const pass = req.body.password;
+    const rem = req.body.remember;
     console.log(user)
     if (user != "" && pass != "") {
         conectado.query('SELECT correo,passwd,tipousuario_idtipousuario FROM usuarios WHERE correo = ? ', [user], (error, results) => {
@@ -124,10 +153,16 @@ router.post('/auth', async (req, res) => {
                 });
             }
             else {
+                if (rem) {
+                    req.session.cookie.expires = new Date(Date.now() + 31536000000);;
+                }
+                else {
+                    req.session.cookie.expires = false;
+                }
                 req.session.loggedin = true;
                 req.session.user = results[0].correo;
                 req.session.tipeuser = results[0].tipousuario_idtipousuario;
-                res.redirect('/')
+                res.redirect('/usuario.html')
             }
         });
     }

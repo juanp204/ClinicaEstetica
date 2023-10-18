@@ -1,0 +1,28 @@
+<% for(var i=0; i<servicios.length; i++) {%>
+
+    <div class="u-container-style u-list-item u-repeater-item u-white u-list-item-1">
+        <div class="u-container-layout u-similar-container u-valign-top-xl u-container-layout-1">
+            <img alt="" class="u-expanded-width-sm u-expanded-width-xs u-image u-image-default u-image-1"
+                data-image-width="300" data-image-height="168" src=<%=servicios[i].imagen %>>
+            <div class="u-container-style u-expanded-width-sm u-expanded-width-xs u-group u-group-1">
+                <div class="u-container-layout u-container-layout-2">
+                    <h4 class="u-text u-text-3">
+                        <%= servicios[i].titulo %>
+                    </h4>
+                    <p class="u-text u-text-4"> `<%= servicios[i].descripcion %>` &nbsp;<br>
+                    </p>
+                    <a href=<%="/agregar?id=" +servicios[i].idtipocita%>
+                        class="u-border-none u-btn u-btn-round u-button-style u-hover-palette-4-base u-radius-50 u-white
+                        u-btn-1"><span class="u-icon"><svg class="u-svg-content" viewBox="0 0 513.64 513.64" x="0px"
+                                y="0px" style="width: 1em; height: 1em;">
+                                <path
+                                    d="M499.66,376.96l-71.68-71.68c-25.6-25.6-69.12-15.359-79.36,17.92c-7.68,23.041-33.28,35.841-56.32,30.72 c-51.2-12.8-120.32-79.36-133.12-133.12c-7.68-23.041,7.68-48.641,30.72-56.32c33.28-10.24,43.52-53.76,17.92-79.36l-71.68-71.68 c-20.48-17.92-51.2-17.92-69.12,0l-48.64,48.64c-48.64,51.2,5.12,186.88,125.44,307.2c120.32,120.32,256,176.641,307.2,125.44 l48.64-48.64C517.581,425.6,517.581,394.88,499.66,376.96z">
+                                </path>
+                            </svg></span>&nbsp;Agendar Ahora&nbsp;
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <% } %>
