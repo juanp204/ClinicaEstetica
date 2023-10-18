@@ -6,16 +6,16 @@
   <meta charset="utf-8">
   <meta name="keywords" content="">
   <meta name="description" content="">
-  <title>register</title>
+  <title>Admin</title>
   <link rel="stylesheet" href="nicepage.css" media="screen">
-  <link rel="stylesheet" href="register.css" media="screen">
+  <link rel="stylesheet" href="Admin.css" media="screen">
   <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
   <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
   <meta name="generator" content="Nicepage 5.19.3, nicepage.com">
   <link id="u-theme-google-font" rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
   <link id="u-page-google-font" rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Merriweather:300,300i,400,400i,700,700i,900,900i">
+    href="https://fonts.googleapis.com/css?family=Merriweather:300,300i,400,400i,700,700i,900,900i">
 
 
 
@@ -26,7 +26,7 @@
 		"logo": "images/logo.jpg"
 }</script>
   <meta name="theme-color" content="#478ac9">
-  <meta property="og:title" content="register">
+  <meta property="og:title" content="Admin">
   <meta property="og:description" content="">
   <meta property="og:type" content="website">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -62,34 +62,39 @@
           <ul class="u-nav u-spacing-20 u-unstyled u-nav-1">
             <li class="u-nav-item"><a
                 class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-black u-text-hover-palette-2-base"
-                href="Inicio.html" style="padding: 18px 10px;"
+                href="Inicio.html"
                 data-lang-en="{&quot;content&quot;:&quot;Inicio&quot;,&quot;href&quot;:&quot;Inicio.html&quot;}"
-                data-lang-es="{&quot;content&quot;:&quot;Inicio&quot;,&quot;href&quot;:&quot;Inicio.html&quot;}">Inicio</a>
+                data-lang-es="{&quot;content&quot;:&quot;Inicio&quot;,&quot;href&quot;:&quot;Inicio.html&quot;}"
+                style="padding: 18px 10px;">Inicio</a>
             </li>
             <li class="u-nav-item"><a
                 class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-black u-text-hover-palette-2-base"
-                href="Servicios.html#carousel_8486" style="padding: 18px 10px;"
+                href="Servicios.html#carousel_8486"
                 data-lang-en="{&quot;content&quot;:&quot;Acerca De&quot;,&quot;href&quot;:&quot;287205495#carousel_8486&quot;}"
-                data-lang-es="{&quot;content&quot;:&quot;Acerca De&quot;,&quot;href&quot;:&quot;287205495#carousel_8486&quot;}">Acerca
-                De</a>
+                data-lang-es="{&quot;content&quot;:&quot;Acerca De&quot;,&quot;href&quot;:&quot;287205495#carousel_8486&quot;}"
+                style="padding: 18px 10px;">Acerca De</a>
             </li>
             <li class="u-nav-item"><a
                 class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-black u-text-hover-palette-2-base"
-                href="Servicios.html#sec-fa80" style="padding: 18px 10px;"
+                href="Servicios.html#sec-fa80"
                 data-lang-en="{&quot;content&quot;:&quot;Contacto&quot;,&quot;href&quot;:&quot;287205495#sec-fa80&quot;}"
-                data-lang-es="{&quot;content&quot;:&quot;Contacto&quot;,&quot;href&quot;:&quot;287205495#sec-fa80&quot;}">Contacto</a>
+                data-lang-es="{&quot;content&quot;:&quot;Contacto&quot;,&quot;href&quot;:&quot;287205495#sec-fa80&quot;}"
+                style="padding: 18px 10px;">Contacto</a>
             </li>
             <li class="u-nav-item"><a
                 class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-black u-text-hover-palette-2-base"
-                href="Servicios.html" style="padding: 18px 10px;"
+                href="Servicios.html"
                 data-lang-en="{&quot;content&quot;:&quot;Servicios&quot;,&quot;href&quot;:&quot;Servicios.html&quot;}"
-                data-lang-es="{&quot;content&quot;:&quot;Servicios&quot;,&quot;href&quot;:&quot;Servicios.html&quot;}">Servicios</a>
+                data-lang-es="{&quot;content&quot;:&quot;Servicios&quot;,&quot;href&quot;:&quot;Servicios.html&quot;}"
+                style="padding: 18px 10px;">Servicios</a>
             </li>
             <li class="u-nav-item"><a
                 class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-black u-text-hover-palette-2-base"
-                href="Login.html" style="padding: 18px 10px;"
+                href="<%= hreflog %>" style="padding: 18px 10px;"
                 data-lang-en="{&quot;content&quot;:&quot;Login&quot;,&quot;href&quot;:&quot;Login.html&quot;}"
-                data-lang-es="{&quot;content&quot;:&quot;Login&quot;,&quot;href&quot;:&quot;Login.html&quot;}">Login</a>
+                data-lang-es="{&quot;content&quot;:&quot;Login&quot;,&quot;href&quot;:&quot;Login.html&quot;}">
+                <%= login %>
+              </a>
             </li>
           </ul>
         </div>
@@ -115,9 +120,13 @@
                     data-lang-en="{&quot;content&quot;:&quot;Servicios&quot;,&quot;href&quot;:&quot;Servicios.html&quot;}"
                     data-lang-es="{&quot;content&quot;:&quot;Servicios&quot;,&quot;href&quot;:&quot;Servicios.html&quot;}">Servicios</a>
                 </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Login.html"
+                <li class="u-nav-item"><a
+                    class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-black u-text-hover-palette-2-base"
+                    href="<%= hreflog %>" style="padding: 18px 10px;"
                     data-lang-en="{&quot;content&quot;:&quot;Login&quot;,&quot;href&quot;:&quot;Login.html&quot;}"
-                    data-lang-es="{&quot;content&quot;:&quot;Login&quot;,&quot;href&quot;:&quot;Login.html&quot;}">Login</a>
+                    data-lang-es="{&quot;content&quot;:&quot;Login&quot;,&quot;href&quot;:&quot;Login.html&quot;}">
+                    <%= login %>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -133,59 +142,39 @@
         data-lang-es="​Clínica:&amp;nbsp;Belleza y Restauración"> Clínica:&nbsp;Belleza y Restauración</h1>
     </div>
   </header>
-  <section class="u-align-center u-clearfix u-gradient u-section-1" id="carousel_d566">
+  <section class="u-align-center u-clearfix u-gradient u-section-1" id="sec-9758">
     <div class="u-clearfix u-sheet u-sheet-1">
-      <h2 class="u-custom-font u-font-montserrat u-text u-text-body-alt-color u-text-default u-text-1"
-        data-lang-en="Register" data-lang-es="Register">Register</h2>
-      <div
-        class="u-align-center u-container-style u-expanded-width-xs u-group u-radius-50 u-shape-round u-white u-group-1">
-        <div class="u-container-layout u-container-layout-1">
-          <div class="u-form u-form-1">
-            <form action="/register"
-              class="u-clearfix u-form-custom-backend u-form-spacing-28 u-form-vertical u-inner-form" source="custom"
-              name="form" style="padding: 0px;" redirect="true" method="post">
-              <div class="u-form-group u-form-name">
-                <label class="u-label" data-lang-en="Nombres" data-lang-es="Nombres">Nombres</label>
-                <input type="text" placeholder="Enter your Name" id="name-c6a3" name="name"
-                  class="u-input u-input-rectangle u-radius-6" data-lang-en="Enter your Name"
-                  data-lang-es="Enter your Name">
+      <h2 class="u-custom-font u-font-merriweather u-text u-text-black u-text-default u-text-1" data-lang-en="​
+Servicios médicos 
+" data-lang-es="​
+Servicios médicos 
+"> Servicios médicos </h2>
+      <div class="u-expanded-width u-list u-list-1">
+        <div class="u-repeater u-repeater-1">
+
+          <% for(var i=0; i<servicios.length; i++) {%>
+
+            <div class="u-container-style u-list-item u-repeater-item u-white u-list-item-1">
+              <div class="u-container-layout u-similar-container u-valign-top-xl u-container-layout-1">
+                <img alt="" class="u-expanded-width-sm u-expanded-width-xs u-image u-image-default u-image-1"
+                  data-image-width="300" data-image-height="168" src=<%=servicios[i].imagen %>>
+                <div class="u-container-style u-expanded-width-sm u-expanded-width-xs u-group u-group-1">
+                  <div class="u-container-layout u-container-layout-2">
+                    <h4 class="u-text u-text-3">
+                      <%= servicios[i].titulo %>
+                    </h4>
+                    <p class="u-text u-text-4"> `<%= servicios[i].descripcion %>` &nbsp;<br>
+                    </p>
+                    <a href=<%="/editar?id=" +servicios[i].idtipocita%> class="u-btn u-button-style u-btn-1"
+                      data-lang-es="{&quot;content&quot;:&quot;Botón&quot;,&quot;href&quot;:&quot;https://nicepage.com/es/plantillas-joomla&quot;}">Editar</a>
+                  </div>
+                </div>
               </div>
-              <div class="u-form-group u-form-group-2">
-                <label class="u-label" data-lang-en="Apellidos" data-lang-es="Apellidos">Apellidos</label>
-                <input type="text" id="text-6be3" name="apellido" class="u-input u-input-rectangle u-radius-6"
-                  placeholder="Enter your Lastname" data-lang-en="Enter your Lastname"
-                  data-lang-es="Enter your Lastname">
-              </div>
-              <div class="u-form-email u-form-group">
-                <label class="u-label" data-lang-en="Email" data-lang-es="Email">Email</label>
-                <input type="email" placeholder="Enter a valid email address" id="email-c6a3" name="email"
-                  class="u-input u-input-rectangle u-radius-6" data-lang-en="Enter a valid email address"
-                  data-lang-es="Enter a valid email address">
-              </div>
-              <div class="u-form-group u-form-group-4">
-                <label class="u-label" data-lang-en="Password" data-lang-es="Password">Password</label>
-                <input type="text" id="text-d17d" name="pass" class="u-input u-input-rectangle u-radius-6"
-                  placeholder="Enter a Password" data-lang-en="Enter a Password" data-lang-es="Enter a Password">
-              </div>
-              <div class="u-align-center u-form-group u-form-submit">
-                <a href="#" class="u-border-none u-btn u-btn-submit u-button-style u-palette-2-base u-btn-1"
-                  data-lang-en="{&quot;content&quot;:&quot;Submit&quot;,&quot;href&quot;:&quot;#&quot;}"
-                  data-lang-es="{&quot;content&quot;:&quot;Submit&quot;,&quot;href&quot;:&quot;#&quot;}">Submit</a>
-                <input type="submit" value="submit" class="u-form-control-hidden">
-              </div>
-              <div class="u-form-send-message u-form-send-success" data-lang-en="
-            Thank you! Your message has been sent.
-        " data-lang-es="
-            Thank you! Your message has been sent.
-        "> Thank you! Your message has been sent. </div>
-              <div class="u-form-send-error u-form-send-message" data-lang-en="
-            Unable to send your message. Please fix errors then try again.
-        " data-lang-es="
-            Unable to send your message. Please fix errors then try again.
-        "> Unable to send your message. Please fix errors then try again. </div>
-              <input type="hidden" value="" name="recaptchaResponse">
-            </form>
-          </div>
+            </div>
+
+            <% } %>
+
+
         </div>
       </div>
     </div>
@@ -196,18 +185,6 @@
   <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-3868">
     <div class="u-clearfix u-sheet u-sheet-1"></div>
   </footer>
-
-  <% if( typeof alert !="undefined" ) { %>
-    <script>
-      Swal.fire({
-        title: `<%= alertTitle %>`,
-        text: `<%= alertMessage %>`,
-        icon: `<%= alertIcon %>`,
-        showConfirmButton: <%= showConfirmButton %>,
-        timer: <%= timer %>
-          })
-    </script>
-    <% } %>
 
 </body>
 

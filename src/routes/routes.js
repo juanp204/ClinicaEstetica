@@ -13,33 +13,67 @@ console.log(rootdir)
 
 router.get('/', async (req, res) => {
     //res.render(path.join(route,'views/index.html'));
-    const user_CK = req.session.user
-    const id = req.session.tipeuser
 
-    res.sendFile('/views/index.html', { root: rootdir })
+    let login, hreflog;
+
+    if (req.session.loggedin) {
+        login = 'Perfil';
+        hreflog = '/usuario.html';
+    } else {
+        login = 'Login';
+        hreflog = '/login.html';
+    }
+
+    res.render(path.join(rootdir, 'views/index.html'), { login, hreflog });
 });
 router.get('/login.html', async (req, res) => {
     //res.render(path.join(route,'views/index.html'));
     res.render(path.join(rootdir, 'views/Login.html'))
 });
+
+router.get('/editar', async (req, res) => {
+    //res.render(path.join(route,'views/index.html'));
+    res.render(path.join(rootdir, 'views/editar.html'))
+});
+
+
+
 router.get('/inicio.html', async (req, res) => {
     //res.render(path.join(route,'views/index.html'));
     //res.sendFile('/views/inicio.html', { root: rootdir })
     res.redirect('/')
 });
-router.get('/servicios.html', async (req, res) => {
+
+router.get('/cerrarsesion', async (req, res) => {
+    req.session.destroy()
+    res.redirect('/')
+});
+
+router.get('/admin.html', async (req, res) => {
     //res.render(path.join(route,'views/index.html'));
     //res.sendFile('/views/servicios.html', { root: rootdir })
+
+    let login, hreflog;
+
+    if (req.session.loggedin) {
+        login = 'admin';
+        hreflog = '/admin.html';
+    } else {
+        login = 'Login';
+        hreflog = '/login.html';
+    }
 
     conectado.query('SELECT * FROM servicios', (error, results) => {
         console.log(results)
         if (error || results.length == 0) {
-
-            res.render(path.join(rootdir, 'views/servicios.html'), {
+            console.log('error')
+            res.render(path.join(rootdir, 'views/admin.html'), {
+                login,
+                hreflog,
                 servicios: results,
                 alert: true,
-                alertTitle: "Error",
-                alertMessage: "Usuario y/o password incorrecta",
+                alertTitle: "Sin Servicios",
+                alertMessage: "no hay servicios por el momento",
                 alertIcon: "error",
                 showConfirmButton: true,
                 timer: false
@@ -47,15 +81,55 @@ router.get('/servicios.html', async (req, res) => {
 
         }
         else {
+            res.render(path.join(rootdir, 'views/admin.html'), {
+                login,
+                hreflog,
+                servicios: results
+            });
+        }
+    });
+
+    //res.render(path.join(rootdir, 'views/Servicios.html'))
+
+});
+
+
+router.get('/servicios.html', async (req, res) => {
+    //res.render(path.join(route,'views/index.html'));
+    //res.sendFile('/views/servicios.html', { root: rootdir })
+
+    let login, hreflog;
+
+    if (req.session.loggedin) {
+        login = 'Perfil';
+        hreflog = '/usuario.html';
+    } else {
+        login = 'Login';
+        hreflog = '/login.html';
+    }
+
+    conectado.query('SELECT * FROM servicios', (error, results) => {
+        console.log(results)
+        if (error || results.length == 0) {
 
             res.render(path.join(rootdir, 'views/servicios.html'), {
+                login,
+                hreflog,
                 servicios: results,
                 alert: true,
-                alertTitle: "Error",
-                alertMessage: "Usuario y/o password incorrecta",
+                alertTitle: "Sin Servicios",
+                alertMessage: "no hay servicios por el momento",
                 alertIcon: "error",
                 showConfirmButton: true,
                 timer: false
+            });
+
+        }
+        else {
+            res.render(path.join(rootdir, 'views/servicios.html'), {
+                login,
+                hreflog,
+                servicios: results
             });
         }
     });
@@ -66,13 +140,39 @@ router.get('/servicios.html', async (req, res) => {
 
 
 router.get('/usuario.html', async (req, res) => {
+    console.log(req.session)
+
+    let login, hreflog;
+
+    if (req.session.tipeuser == '1') {
+        login = 'admin';
+        hreflog = '/admin.html';
+    }
+    else if (req.session.tipeuser == '2') {
+        login = 'perfil';
+        hreflog = '/usuario.html';
+    }
+
+    console.log(login, hreflog)
+    if (req.session.loggedin) {
+        res.render(path.join(rootdir, 'views/usuario.html'), {
+            login,
+            hreflog,
+            nombre: req.session.name
+        })
+    }
+    else {
+        res.redirect('/')
+    }
     //res.render(path.join(route,'views/index.html'));
-    res.sendFile('/views/usuario.html', { root: rootdir })
 });
 
 router.get('/register.html', async (req, res) => {
     //res.render(path.join(route,'views/index.html'));
     res.render(path.join(rootdir, 'views/register.html'))
+
+
+
 });
 
 router.get('/appointment.html', async (req, res) => {
@@ -131,14 +231,14 @@ router.post('/register', async (req, res) => {
 })
 
 router.post('/auth', async (req, res) => {
-    const user_CK = req.session.user
-    const id = req.session.tipeuser
+    const user_CK = req.session.user;
+    const id = req.session.tipeuser;
     const user = req.body.username;
     const pass = req.body.password;
     const rem = req.body.remember;
     console.log(user)
     if (user != "" && pass != "") {
-        conectado.query('SELECT correo,passwd,tipousuario_idtipousuario FROM usuarios WHERE correo = ? ', [user], (error, results) => {
+        conectado.query('SELECT correo,passwd,tipousuario_idtipousuario,nombres,apellidos FROM usuarios WHERE correo = ? ', [user], (error, results) => {
             console.log(results)
             if (error || results.length == 0 || pass != results[0].passwd) {
                 res.render(path.join(rootdir, 'views/Login.html'), {
@@ -153,15 +253,16 @@ router.post('/auth', async (req, res) => {
                 });
             }
             else {
-                if (rem) {
-                    req.session.cookie.expires = new Date(Date.now() + 31536000000);;
-                }
-                else {
-                    req.session.cookie.expires = false;
-                }
+
                 req.session.loggedin = true;
                 req.session.user = results[0].correo;
+                req.session.name = results[0].nombres;
+                req.session.apellido = results[0].apellidos;
                 req.session.tipeuser = results[0].tipousuario_idtipousuario;
+
+                // if (rem != 'On') {
+                //     req.session.cookie.expires = false;
+                // }
                 res.redirect('/usuario.html')
             }
         });
