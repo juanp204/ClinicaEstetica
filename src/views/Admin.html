@@ -90,10 +90,10 @@
             </li>
             <li class="u-nav-item"><a
                 class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-black u-text-hover-palette-2-base"
-                href="<%= hreflog %>" style="padding: 18px 10px;"
+                href="/usuario.html" style="padding: 18px 10px;"
                 data-lang-en="{&quot;content&quot;:&quot;Login&quot;,&quot;href&quot;:&quot;Login.html&quot;}"
                 data-lang-es="{&quot;content&quot;:&quot;Login&quot;,&quot;href&quot;:&quot;Login.html&quot;}">
-                <%= login %>
+                Perfil
               </a>
             </li>
           </ul>
@@ -122,10 +122,10 @@
                 </li>
                 <li class="u-nav-item"><a
                     class="u-border-active-palette-1-base u-border-hover-palette-1-base u-button-style u-nav-link u-text-active-black u-text-hover-palette-2-base"
-                    href="<%= hreflog %>" style="padding: 18px 10px;"
+                    href="/usuario.html" style="padding: 18px 10px;"
                     data-lang-en="{&quot;content&quot;:&quot;Login&quot;,&quot;href&quot;:&quot;Login.html&quot;}"
                     data-lang-es="{&quot;content&quot;:&quot;Login&quot;,&quot;href&quot;:&quot;Login.html&quot;}">
-                    <%= login %>
+                    Perfil
                   </a>
                 </li>
               </ul>
@@ -165,7 +165,7 @@ Servicios médicos
                     </h4>
                     <p class="u-text u-text-4"> `<%= servicios[i].descripcion %>` &nbsp;<br>
                     </p>
-                    <a href=<%="/editar?id=" +servicios[i].idtipocita%> class="u-btn u-button-style u-btn-1"
+                    <a href=<%="/editar/" +servicios[i].idtipocita%> class="u-btn u-button-style u-btn-1"
                       data-lang-es="{&quot;content&quot;:&quot;Botón&quot;,&quot;href&quot;:&quot;https://nicepage.com/es/plantillas-joomla&quot;}">Editar</a>
                   </div>
                 </div>
@@ -174,7 +174,13 @@ Servicios médicos
 
             <% } %>
 
-
+              <div class="u-container-style u-list-item u-repeater-item u-white u-list-item-1" data-href="editar">
+                <div class="u-container-layout u-similar-container u-container-layout-1">
+                  <h3 class="u-text u-text-default u-text-2" data-lang-es="Nuevo Servicio"
+                    data-lang-en="Nuevo Servicio">Nuevo Servicio</h3><span class="u-file-icon u-icon u-icon-1"><img
+                      src="images/748113.png" alt=""></span>
+                </div>
+              </div>
         </div>
       </div>
     </div>

@@ -26,3 +26,28 @@
     </div>
 
     <% } %>
+
+
+
+
+        <% for(var i=0; i<servicios.length; i++) {%>
+
+            <div class="u-container-style u-list-item u-repeater-item u-white u-list-item-1">
+                <div class="u-container-layout u-similar-container u-valign-top-xl u-container-layout-1">
+                    <img alt="" class="u-expanded-width-sm u-expanded-width-xs u-image u-image-default u-image-1"
+                        data-image-width="300" data-image-height="168" src=<%=servicios[i].imagen %>>
+                    <div class="u-container-style u-expanded-width-sm u-expanded-width-xs u-group u-group-1">
+                        <div class="u-container-layout u-container-layout-2">
+                            <h4 class="u-text u-text-3">
+                                <%= servicios[i].titulo %>
+                            </h4>
+                            <p class="u-text u-text-4"> `<%= servicios[i].descripcion %>` &nbsp;<br>
+                            </p>
+                            <a href=<%="/editar?id=" +servicios[i].idtipocita%> class="u-btn u-button-style u-btn-1"
+                                data-lang-es="{&quot;content&quot;:&quot;Botón&quot;,&quot;href&quot;:&quot;https://nicepage.com/es/plantillas-joomla&quot;}">Editar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <% } %>

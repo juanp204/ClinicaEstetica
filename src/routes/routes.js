@@ -11,6 +11,32 @@ console.log(route);
 rootdir = __dirname.slice(0, -6)
 console.log(rootdir)
 
+function generateCalendar() {
+    const calendarData = [];
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth();
+    const currentYear = currentDate.getFullYear();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    let currentDay = 1;
+    let week = [];
+
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dayOfWeek = new Date(currentYear, currentMonth, day).getDay();
+        if (dayOfWeek === 0 && day !== 1) {
+            calendarData.push(week);
+            week = [];
+        }
+        week.push({ date: day, month: currentMonth });
+        currentDay++;
+    }
+
+    if (week.length > 0) {
+        calendarData.push(week);
+    }
+
+    return calendarData;
+}
+
 router.get('/', async (req, res) => {
     //res.render(path.join(route,'views/index.html'));
 
@@ -26,17 +52,44 @@ router.get('/', async (req, res) => {
 
     res.render(path.join(rootdir, 'views/index.html'), { login, hreflog });
 });
+
 router.get('/login.html', async (req, res) => {
     //res.render(path.join(route,'views/index.html'));
     res.render(path.join(rootdir, 'views/Login.html'))
 });
 
-router.get('/editar', async (req, res) => {
-    //res.render(path.join(route,'views/index.html'));
-    res.render(path.join(rootdir, 'views/editar.html'))
+router.get('/editar/:id', async (req, res) => {
+
+    conectado.query('SELECT * FROM servicios where idtipocita = ?', [req.params.id], (error, results) => {
+        console.log(results)
+        if (error || results.length == 0) {
+
+            res.redirect('/admin.html')
+
+        }
+        else {
+            res.render(path.join(rootdir, 'views/editar.html'), {
+                servicio: results
+            });
+        }
+    });
+
+
 });
 
+router.post('/editar', async (req, res) => {
 
+    if (req.body.id > 0) {
+        conectado.query(`UPDATE SERVICIOS SET = titulo:'${req.body.titulo}', descripcion:'${req.body.desc}', imagen:'/images/${req.body.titulo}' WHERE idtipocita = ${req.body.id}`, (error, results) => {
+            res.redirect('/admin.html')
+        })
+    }
+    else {
+        conectado.query('INSERT INTO servicios set = ?', { titulo: req.body.titulo, descripcion: req.body.desc, imagen: `/images/${req.body.titulo}` }, (error, results) => {
+            res.redirect('/admin.html')
+        })
+    }
+});
 
 router.get('/inicio.html', async (req, res) => {
     //res.render(path.join(route,'views/index.html'));
@@ -53,23 +106,11 @@ router.get('/admin.html', async (req, res) => {
     //res.render(path.join(route,'views/index.html'));
     //res.sendFile('/views/servicios.html', { root: rootdir })
 
-    let login, hreflog;
-
-    if (req.session.loggedin) {
-        login = 'admin';
-        hreflog = '/admin.html';
-    } else {
-        login = 'Login';
-        hreflog = '/login.html';
-    }
-
     conectado.query('SELECT * FROM servicios', (error, results) => {
         console.log(results)
         if (error || results.length == 0) {
             console.log('error')
             res.render(path.join(rootdir, 'views/admin.html'), {
-                login,
-                hreflog,
                 servicios: results,
                 alert: true,
                 alertTitle: "Sin Servicios",
@@ -82,8 +123,6 @@ router.get('/admin.html', async (req, res) => {
         }
         else {
             res.render(path.join(rootdir, 'views/admin.html'), {
-                login,
-                hreflog,
                 servicios: results
             });
         }
@@ -93,12 +132,151 @@ router.get('/admin.html', async (req, res) => {
 
 });
 
+router.get('/agenda', async (req, res) => {
+
+    if (!req.session.loggedin) {
+        res.redirect('/')
+    }
+    else {
+        conectado.query('SELECT * FROM cita INNER JOIN servicios ON cita.tipocita_idtipocita = servicios.idtipocita WHERE usuarios_idusuarios = ?', [req.session.iduser], (error, results) => {
+            console.log(results)
+            console.log(error)
+            if (error || results.length == 0) {
+                console.log('error')
+                res.render(path.join(rootdir, 'views/agenda.html'), {
+                    calendarData: generateCalendar(),
+                    servicio: [],
+                    alert: true
+                });
+
+            }
+            else {
+                res.render(path.join(rootdir, 'views/agenda.html'), {
+                    calendarData: generateCalendar(),
+                    servicio: results
+                });
+            }
+        });
+    }
+
+
+
+});
+
+router.get('/eventos', async (req, res) => {
+    const year = req.query.year
+    const month = req.query.month
+    conectado.query('SELECT * FROM cita WHERE usuarios_idusuarios = ?', [req.session.iduser], (error, results) => {
+        console.log(results)
+        if (error || results.length == 0) {
+            console.log('error')
+            res.render(path.join(rootdir, 'views/agenda.html'), {
+                calendarData: generateCalendar(),
+                eventos: results,
+                alert: true
+            });
+
+        }
+        else {
+            res.render(path.join(rootdir, 'views/admin.html'), {
+                calendarData: generateCalendar(),
+                eventos: results
+            });
+        }
+    });
+
+
+
+
+});
+
+router.post('/agendar', async (req, res) => {
+    const cita = req.body.select;
+    const fecha = req.body.time;
+    const id = req.session.iduser;
+    console.log(fecha)
+    const mensaje = req.body.message;
+    conectado.query(`INSERT INTO cita(FECHA,tipocita_idtipocita,usuarios_idusuarios,mensaje) VALUES (STR_TO_DATE('${fecha}', '%Y-%m-%dT%H:%i'),${cita},${id},'${mensaje}')`, async (error, results) => {
+        console.log(error)
+        res.redirect('/usuario.html')
+    })
+});
 
 router.get('/servicios.html', async (req, res) => {
+    var login, hreflog;
+
+    if (req.session.loggedin) {
+        login = 'Perfil';
+        hreflog = '/usuario.html';
+
+        conectado.query('SELECT * FROM servicios', (error, results) => {
+            console.log(results)
+            if (error || results.length == 0) {
+
+                res.render(path.join(rootdir, 'views/servicios.html'), {
+                    login,
+                    hreflog,
+                    servicios: results,
+                    alert: true,
+                    alertTitle: "Sin Servicios",
+                    alertMessage: "no hay servicios por el momento",
+                    alertIcon: "error",
+                    showConfirmButton: true,
+                    timer: false
+                });
+
+            }
+            else {
+                res.render(path.join(rootdir, 'views/servicios.html'), {
+                    login,
+                    hreflog,
+                    servicios: results
+                });
+            }
+        });
+
+    } else {
+        login = 'Login';
+        hreflog = '/login.html';
+
+        conectado.query('SELECT * FROM servicios', (error, results) => {
+            console.log(results)
+            if (error || results.length == 0) {
+
+                res.render(path.join(rootdir, 'views/servicios.html'), {
+                    login,
+                    hreflog,
+                    servicios: results,
+                    alert: true,
+                    alertTitle: "Sin Servicios",
+                    alertMessage: "no hay servicios por el momento",
+                    alertIcon: "error",
+                    showConfirmButton: true,
+                    timer: false
+                });
+
+            }
+            else {
+                res.render(path.join(rootdir, 'views/servicios.html'), {
+                    login,
+                    hreflog,
+                    servicios: results
+                });
+            }
+        });
+
+    }
+
+
+    //res.render(path.join(rootdir, 'views/Servicios.html'))
+
+});
+
+/* router.get('/agregar', async (req, res) => {
     //res.render(path.join(route,'views/index.html'));
     //res.sendFile('/views/servicios.html', { root: rootdir })
 
-    let login, hreflog;
+    var login, hreflog;
 
     if (req.session.loggedin) {
         login = 'Perfil';
@@ -107,42 +285,48 @@ router.get('/servicios.html', async (req, res) => {
         login = 'Login';
         hreflog = '/login.html';
     }
+    console.log(req.query.id ? true : false)
+    if (req.query.id ? true : false) {
+        conectado.query('SELECT * FROM servicios', (error, results) => {
+            console.log(results)
+            if (error || results.length == 0) {
+    
+                res.render(path.join(rootdir, 'views/servicios.html'), {
+                    login,
+                    hreflog,
+                    servicios: results,
+                    alert: true,
+                    alertTitle: "Sin Servicios",
+                    alertMessage: "no hay servicios por el momento",
+                    alertIcon: "error",
+                    showConfirmButton: true,
+                    timer: false
+                });
+    
+            }
+            else {
+                res.render(path.join(rootdir, 'views/servicios.html'), {
+                    login,
+                    hreflog,
+                    servicios: results
+                });
+            }
+        });
 
-    conectado.query('SELECT * FROM servicios', (error, results) => {
-        console.log(results)
-        if (error || results.length == 0) {
+    }
+    else {
+        res.redirect('/Servicios.html#sec-9758')
+    }
 
-            res.render(path.join(rootdir, 'views/servicios.html'), {
-                login,
-                hreflog,
-                servicios: results,
-                alert: true,
-                alertTitle: "Sin Servicios",
-                alertMessage: "no hay servicios por el momento",
-                alertIcon: "error",
-                showConfirmButton: true,
-                timer: false
-            });
-
-        }
-        else {
-            res.render(path.join(rootdir, 'views/servicios.html'), {
-                login,
-                hreflog,
-                servicios: results
-            });
-        }
-    });
 
     //res.render(path.join(rootdir, 'views/Servicios.html'))
 
-});
-
+}); */
 
 router.get('/usuario.html', async (req, res) => {
     console.log(req.session)
 
-    let login, hreflog;
+    var login, hreflog;
 
     if (req.session.tipeuser == '1') {
         login = 'admin';
@@ -153,7 +337,6 @@ router.get('/usuario.html', async (req, res) => {
         hreflog = '/usuario.html';
     }
 
-    console.log(login, hreflog)
     if (req.session.loggedin) {
         res.render(path.join(rootdir, 'views/usuario.html'), {
             login,
@@ -171,15 +354,39 @@ router.get('/register.html', async (req, res) => {
     //res.render(path.join(route,'views/index.html'));
     res.render(path.join(rootdir, 'views/register.html'))
 
-
-
 });
 
 router.get('/appointment.html', async (req, res) => {
-    //res.render(path.join(route,'views/index.html'));
-    res.sendFile('/views/appointment.html', { root: rootdir })
-});
+    if (!req.session.loggedin) {
+        res.redirect('/')
+    }
+    else {//if (req.query.id ? true : false) {
 
+        conectado.query('SELECT idtipocita,titulo FROM servicios', async (error, results) => {
+            if (results.length == 0) {
+                res.render(path.join(rootdir, 'views/appointment.html'), {
+                    alert: true,
+                    alertTitle: "Error",
+                    alertMessage: "no hay servicios actualmente",
+                    alertIcon: "error",
+                    showConfirmButton: true,
+                    timer: false
+                });
+            }
+            else {
+                res.render(path.join(rootdir, 'views/appointment.html'), {
+                    servicios: results
+                });
+            }
+        })
+    }
+    /* else {
+        res.render(path.join(rootdir, 'views/Appointment.html')-{
+
+        })
+    } */
+
+});
 
 router.post('/register', async (req, res) => {
     const email = req.body.email;
@@ -228,7 +435,7 @@ router.post('/register', async (req, res) => {
             timer: false
         });
     }
-})
+});
 
 router.post('/auth', async (req, res) => {
     const user_CK = req.session.user;
@@ -238,7 +445,7 @@ router.post('/auth', async (req, res) => {
     const rem = req.body.remember;
     console.log(user)
     if (user != "" && pass != "") {
-        conectado.query('SELECT correo,passwd,tipousuario_idtipousuario,nombres,apellidos FROM usuarios WHERE correo = ? ', [user], (error, results) => {
+        conectado.query('SELECT * FROM usuarios WHERE correo = ? ', [user], (error, results) => {
             console.log(results)
             if (error || results.length == 0 || pass != results[0].passwd) {
                 res.render(path.join(rootdir, 'views/Login.html'), {
@@ -258,11 +465,12 @@ router.post('/auth', async (req, res) => {
                 req.session.user = results[0].correo;
                 req.session.name = results[0].nombres;
                 req.session.apellido = results[0].apellidos;
+                req.session.iduser = results[0].idusuarios;
                 req.session.tipeuser = results[0].tipousuario_idtipousuario;
 
-                // if (rem != 'On') {
-                //     req.session.cookie.expires = false;
-                // }
+                if (rem != 'On') {
+                    req.session.cookie.expires = false;
+                }
                 res.redirect('/usuario.html')
             }
         });
