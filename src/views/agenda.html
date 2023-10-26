@@ -6,12 +6,15 @@
   <meta charset="utf-8">
   <meta name="keywords" content="">
   <meta name="description" content="">
-  <title>Blog</title>
-  <link rel="stylesheet" href="../nicepage.css" media="screen">
-  <link rel="stylesheet" href="../Blog-Template.css" media="screen">
-  <script class="u-script" type="text/javascript" src="../jquery.js" defer=""></script>
-  <script class="u-script" type="text/javascript" src="../nicepage.js" defer=""></script>
+  <title>agenda</title>
+  <link rel="stylesheet" href="nicepage.css" media="screen">
+  <link rel="stylesheet" href="agenda.css" media="screen">
+  <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
+  <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
   <meta name="generator" content="Nicepage 5.20.7, nicepage.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
   <link id="u-theme-google-font" rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
 
@@ -24,6 +27,9 @@
 		"logo": "images/logo.jpg"
 }</script>
   <meta name="theme-color" content="#478ac9">
+  <meta property="og:title" content="agenda">
+  <meta property="og:description" content="">
+  <meta property="og:type" content="website">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -31,12 +37,14 @@
   <meta data-intl-tel-input-cdn-path="intlTelInput/">
 </head>
 
-<body data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="es">
+<body data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="es"
+  data-lang-en="{&quot;head-title&quot;:&quot;&quot;,&quot;head-keywords&quot;:&quot;&quot;,&quot;head-description&quot;:&quot;&quot;}"
+  data-lang-es="{&quot;head-title&quot;:&quot;&quot;,&quot;head-keywords&quot;:&quot;&quot;,&quot;head-description&quot;:&quot;&quot;}">
   <header class="u-clearfix u-custom-color-5 u-header u-header" id="sec-acca" data-animation-name=""
     data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
     <div class="u-clearfix u-sheet u-sheet-1">
-      <a href="../Inicio.html" class="u-image u-logo u-image-1" data-image-width="500" data-image-height="500">
-        <img src="../images/logo.jpg" class="u-logo-image u-logo-image-1">
+      <a href="Inicio.html" class="u-image u-logo u-image-1" data-image-width="500" data-image-height="500">
+        <img src="images/logo.jpg" class="u-logo-image u-logo-image-1">
       </a>
       <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
         <div class="menu-collapse" style="font-size: 1.125rem; letter-spacing: 0px; font-weight: 700;">
@@ -61,38 +69,38 @@
           <ul class="u-custom-font u-heading-font u-nav u-spacing-0 u-unstyled u-nav-1">
             <li class="u-nav-item"><a
                 class="u-border-2 u-border-active-grey-30 u-border-grey-30 u-border-hover-grey-30 u-border-no-bottom u-border-no-left u-border-no-top u-button-style u-nav-link u-text-active-grey-90 u-text-grey-90 u-text-hover-custom-color-2"
-                href="../Inicio.html"
+                href="Inicio.html"
                 data-lang-en="{&quot;content&quot;:&quot;Inicio&quot;,&quot;href&quot;:&quot;Inicio.html&quot;}"
                 data-lang-es="{&quot;content&quot;:&quot;Inicio&quot;,&quot;href&quot;:&quot;Inicio.html&quot;}"
                 style="padding: 0px 20px;">Inicio</a>
             </li>
             <li class="u-nav-item"><a
                 class="u-border-2 u-border-active-grey-30 u-border-grey-30 u-border-hover-grey-30 u-border-no-bottom u-border-no-left u-border-no-top u-button-style u-nav-link u-text-active-grey-90 u-text-grey-90 u-text-hover-custom-color-2"
-                href="../Servicios.html#carousel_8486"
+                href="Servicios.html#carousel_8486"
                 data-lang-en="{&quot;content&quot;:&quot;Acerca De&quot;,&quot;href&quot;:&quot;287205495#carousel_8486&quot;}"
                 data-lang-es="{&quot;content&quot;:&quot;Acerca De&quot;,&quot;href&quot;:&quot;287205495#carousel_8486&quot;}"
                 style="padding: 0px 20px;">Acerca De</a>
             </li>
             <li class="u-nav-item"><a
                 class="u-border-2 u-border-active-grey-30 u-border-grey-30 u-border-hover-grey-30 u-border-no-bottom u-border-no-left u-border-no-top u-button-style u-nav-link u-text-active-grey-90 u-text-grey-90 u-text-hover-custom-color-2"
-                href="../Servicios.html#sec-fa80"
+                href="Servicios.html#sec-fa80"
                 data-lang-en="{&quot;content&quot;:&quot;Contacto&quot;,&quot;href&quot;:&quot;287205495#sec-fa80&quot;}"
                 data-lang-es="{&quot;content&quot;:&quot;Contacto&quot;,&quot;href&quot;:&quot;287205495#sec-fa80&quot;}"
                 style="padding: 0px 20px;">Contacto</a>
             </li>
             <li class="u-nav-item"><a
                 class="u-border-2 u-border-active-grey-30 u-border-grey-30 u-border-hover-grey-30 u-border-no-bottom u-border-no-left u-border-no-top u-button-style u-nav-link u-text-active-grey-90 u-text-grey-90 u-text-hover-custom-color-2"
-                href="../Servicios.html"
+                href="Servicios.html"
                 data-lang-en="{&quot;content&quot;:&quot;Servicios&quot;,&quot;href&quot;:&quot;Servicios.html&quot;}"
                 data-lang-es="{&quot;content&quot;:&quot;Servicios&quot;,&quot;href&quot;:&quot;Servicios.html&quot;}"
                 style="padding: 0px 20px;">Servicios</a>
             </li>
             <li class="u-nav-item"><a
                 class="u-border-2 u-border-active-grey-30 u-border-grey-30 u-border-hover-grey-30 u-border-no-bottom u-border-no-left u-border-no-top u-button-style u-nav-link u-text-active-grey-90 u-text-grey-90 u-text-hover-custom-color-2"
-                href="../Login.html"
+                href="usuario.html"
                 data-lang-en="{&quot;content&quot;:&quot;Login&quot;,&quot;href&quot;:&quot;Login.html&quot;}"
                 data-lang-es="{&quot;content&quot;:&quot;Login&quot;,&quot;href&quot;:&quot;Login.html&quot;}"
-                style="padding: 0px 20px;">Login</a>
+                style="padding: 0px 20px;">Perfil</a>
             </li>
           </ul>
         </div>
@@ -101,26 +109,26 @@
             <div class="u-inner-container-layout u-sidenav-overflow">
               <div class="u-menu-close u-menu-close-1"></div>
               <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
-                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="../Inicio.html"
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Inicio.html"
                     data-lang-en="{&quot;content&quot;:&quot;Inicio&quot;,&quot;href&quot;:&quot;Inicio.html&quot;}"
                     data-lang-es="{&quot;content&quot;:&quot;Inicio&quot;,&quot;href&quot;:&quot;Inicio.html&quot;}">Inicio</a>
                 </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="../Servicios.html#carousel_8486"
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Servicios.html#carousel_8486"
                     data-lang-en="{&quot;content&quot;:&quot;Acerca De&quot;,&quot;href&quot;:&quot;287205495#carousel_8486&quot;}"
                     data-lang-es="{&quot;content&quot;:&quot;Acerca De&quot;,&quot;href&quot;:&quot;287205495#carousel_8486&quot;}">Acerca
                     De</a>
                 </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="../Servicios.html#sec-fa80"
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Servicios.html#sec-fa80"
                     data-lang-en="{&quot;content&quot;:&quot;Contacto&quot;,&quot;href&quot;:&quot;287205495#sec-fa80&quot;}"
                     data-lang-es="{&quot;content&quot;:&quot;Contacto&quot;,&quot;href&quot;:&quot;287205495#sec-fa80&quot;}">Contacto</a>
                 </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="../Servicios.html"
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Servicios.html"
                     data-lang-en="{&quot;content&quot;:&quot;Servicios&quot;,&quot;href&quot;:&quot;Servicios.html&quot;}"
                     data-lang-es="{&quot;content&quot;:&quot;Servicios&quot;,&quot;href&quot;:&quot;Servicios.html&quot;}">Servicios</a>
                 </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="../Login.html"
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="usuario.html"
                     data-lang-en="{&quot;content&quot;:&quot;Login&quot;,&quot;href&quot;:&quot;Login.html&quot;}"
-                    data-lang-es="{&quot;content&quot;:&quot;Login&quot;,&quot;href&quot;:&quot;Login.html&quot;}">Login</a>
+                    data-lang-es="{&quot;content&quot;:&quot;Login&quot;,&quot;href&quot;:&quot;Login.html&quot;}">Perfil</a>
                 </li>
               </ul>
             </div>

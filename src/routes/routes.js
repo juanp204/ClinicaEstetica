@@ -77,6 +77,21 @@ router.get('/editar/:id', async (req, res) => {
 
 });
 
+router.get('/editar', async (req, res) => {
+
+
+    res.render(path.join(rootdir, 'views/editar.html'), {
+        servicio: [{
+            idtipocita: 0,
+            titulo: '',
+            descripcion: '',
+            imagen: ''
+        }]
+    });
+
+
+});
+
 router.post('/editar', async (req, res) => {
 
     if (req.body.id > 0) {
@@ -129,6 +144,12 @@ router.get('/admin.html', async (req, res) => {
     });
 
     //res.render(path.join(rootdir, 'views/Servicios.html'))
+
+});
+
+router.get('/admin', async (req, res) => {
+
+    res.redirect('/admin.html')
 
 });
 
