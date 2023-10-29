@@ -146,7 +146,7 @@ Servicios médicos
 "> Servicios médicos </h2>
       <div class="u-form u-form-1">
         <form action="/editar" class="u-clearfix u-form-custom-backend u-form-spacing-10 u-form-vertical u-inner-form"
-          style="padding: 10px" source="custom" name="form" redirect="true" method="post">
+          style="padding: 10px" source="custom" name="form" redirect="true" method="post" enctype="multipart/form-data">
           <div class="u-form-group u-form-name u-label-none">
             <label class="u-label" data-lang-es="Name" data-lang-en="Name">Name</label>
             <input type="text" placeholder="Titulo" id="name-3b9a" name="titulo" class="u-input u-input-rectangle"
@@ -162,12 +162,11 @@ Servicios médicos
           </div>
           <div class="u-form-group u-label-none u-form-group-3">
             <label class="u-label" data-lang-es="Entrada" data-lang-en="Entrada">Entrada</label>
-            <input type="file" placeholder="" id="text-5438" name="file" class="u-input u-input-rectangle"
-              data-lang-es="" data-lang-en="">
+            <input type="file" placeholder="" id="archivo" name="file" class="u-input u-input-rectangle">
           </div>
           <img class="u-form-group u-form-image u-form-partition-factor-2 u-image u-image-default u-image-1"
-            src="../<%= servicio[0].imagen %>" data-image-width="1920" data-image-height="1200" data-lang-es=""
-            data-lang-en="">
+            src="../<%= servicio[0].imagen %>" id="imagen" data-image-width="1920" data-image-height="1200"
+            data-lang-es="" data-lang-en="">
           <div class="u-align-left u-form-group u-form-submit">
             <a href="#" class="u-btn u-btn-submit u-button-style"
               data-lang-es="{&quot;content&quot;:&quot;Submit&quot;,&quot;href&quot;:&quot;#&quot;}"
@@ -185,12 +184,27 @@ Servicios médicos
       </div>
       <a href="Admin.html" class="u-btn u-button-style u-btn-2"
         data-lang-es="{&quot;content&quot;:&quot;Botón&quot;,&quot;href&quot;:&quot;https://nicepage.one&quot;}">volver</a>
-      <a href="/eliminar" class="u-btn u-button-style u-btn-3"
-        data-lang-es="{&quot;content&quot;:&quot;Botón&quot;,&quot;href&quot;:&quot;https://nicepage.com/c/pets-animals-html-templates&quot;}">Eliminar</a>
+      <% if (servicio[0].idtipocita !=0) {%>
+        <a href="/eliminar?idser=<%= servicio[0].idtipocita %>" class="u-btn u-button-style u-btn-3">Eliminar</a>
+        <% }%>
     </div>
   </section>
 
+  <script>
+    document.getElementById('archivo').addEventListener('change', function (event) {
+      const imagenSubida = document.getElementById('imagen');
+      const file = event.target.files[0];
 
+      if (file) {
+        // Si se seleccionó un archivo, mostrarlo en la etiqueta img
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          imagenSubida.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
 
   <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-3868">
     <div class="u-clearfix u-sheet u-sheet-1"></div>

@@ -301,7 +301,8 @@ Servicios médicos
                     <h4 class="u-text u-text-3">
                       <%= servicios[i].titulo %>
                     </h4>
-                    <p class="u-text u-text-4"> `<%= servicios[i].descripcion %>` &nbsp;<br>
+                    <p class="u-text u-text-4">
+                      <%= servicios[i].descripcion %> &nbsp;<br>
                     </p>
                     <a href=<% if (login=='Perfil' ) { %>
                       "/appointment.html?id=<%= servicios[i].idtipocita %>"

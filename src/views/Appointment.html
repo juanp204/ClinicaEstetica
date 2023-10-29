@@ -153,18 +153,12 @@
                 <label class="u-label" data-lang-es="Cita" data-lang-en="Cita">Cita</label>
                 <div class="u-form-select-wrapper">
                   <select id="select-a827" name="select"
-                    class="u-border-grey-10 u-grey-10 u-input u-input-rectangle u-radius-20" data-lang-es="
-            <option value=&quot;Item 1&quot; data-calc=&quot;&quot;>Item 1</option>
-            <option value=&quot;Item 2&quot; data-calc=&quot;&quot;>Item 2</option>
-            <option value=&quot;Item 3&quot; data-calc=&quot;&quot;>Item 3</option>
-        " data-lang-en="
-            <option value=&quot;Item 1&quot;>Item 1</option>
-            <option value=&quot;Item 2&quot;>Item 2</option>
-            <option value=&quot;Item 3&quot;>Item 3</option>
-        ">
-                    <option value="Item 1" data-calc="">Item 1</option>
-                    <option value="Item 2" data-calc="">Item 2</option>
-                    <option value="Item 3" data-calc="">Item 3</option>
+                    class="u-border-grey-10 u-grey-10 u-input u-input-rectangle u-radius-20">
+                    <% for (let i=0; i < servicios.length; i++) { %>
+                      <option value="<%= servicios[i].idtipocita %>" data-calc="">
+                        <%= servicios[i].titulo %>
+                      </option>
+                      <% } %>
                   </select>
                   <svg class="u-caret u-caret-svg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px"
@@ -175,9 +169,8 @@
               </div>
               <div class="u-form-group u-form-time u-label-top u-form-group-2">
                 <label class="u-label" data-lang-es="Fecha" data-lang-en="Fecha">Fecha</label>
-                <input type="time" readonly="readonly" placeholder="MM/DD/AAAA" id="date-17aa" name="time"
-                  class="u-border-grey-10 u-grey-10 u-input u-input-rectangle u-radius-20" required="required"
-                  data-date-format="mm/dd/yyyy" data-lang-es="MM/DD/AAAA" data-lang-en="MM/DD/AAAA">
+                <input type="datetime-local" id="date-17aa" name="time"
+                  class="u-border-grey-10 u-grey-10 u-input u-input-rectangle u-radius-20" required="required">
               </div>
               <div class="u-form-group u-form-message u-label-top">
                 <label class="u-label" data-lang-en="Message" data-lang-es="Mensage">Mensage</label>

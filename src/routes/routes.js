@@ -3,12 +3,13 @@ const router = express.Router();
 const path = require('path');
 const conectado = require('../database/mysql');
 const session = require('express-session');
+const multer = require('multer');
 
 const route = __dirname.slice(0, -6);
 console.log(route);
 
 // ------- html
-rootdir = __dirname.slice(0, -6)
+const rootdir = __dirname.slice(0, -6)
 console.log(rootdir)
 
 function generateCalendar() {
@@ -37,6 +38,35 @@ function generateCalendar() {
     return calendarData;
 }
 
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(rootdir, 'public/images/')); // Directorio donde se almacenarán los archivos subidos
+    },
+    filename: (req, file, cb) => {
+        // Personaliza el nombre del archivo aquí
+        const customFileName = req.body.titulo.replaceAll(' ', '_') + '.jpg'; // El nombre personalizado que proporcionas desde el formulario
+
+        // Utiliza el nombre personalizado o un nombre predeterminado si no se proporciona
+        const fileName = customFileName || file.originalname;
+
+        cb(null, fileName);
+    }
+});
+const upload = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        // Personaliza la lógica de filtrado aquí
+        if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/jgp') {
+            // Acepta solo archivos JPEG y PNG
+            cb(null, true); // Acepta el archivo
+        } else {
+            cb(null, false); // Rechaza el archivo
+        }
+    },
+    overwrite: true // Habilita la opción de sobrescritura de archivos
+});
+
+
 router.get('/', async (req, res) => {
     //res.render(path.join(route,'views/index.html'));
 
@@ -61,7 +91,6 @@ router.get('/login.html', async (req, res) => {
 router.get('/editar/:id', async (req, res) => {
 
     conectado.query('SELECT * FROM servicios where idtipocita = ?', [req.params.id], (error, results) => {
-        console.log(results)
         if (error || results.length == 0) {
 
             res.redirect('/admin.html')
@@ -92,18 +121,44 @@ router.get('/editar', async (req, res) => {
 
 });
 
-router.post('/editar', async (req, res) => {
+router.post('/editar', upload.single('file'), async (req, res) => {
 
-    if (req.body.id > 0) {
-        conectado.query(`UPDATE SERVICIOS SET = titulo:'${req.body.titulo}', descripcion:'${req.body.desc}', imagen:'/images/${req.body.titulo}' WHERE idtipocita = ${req.body.id}`, (error, results) => {
-            res.redirect('/admin.html')
-        })
+    console.log(req.body.id);
+
+    if (req.body.id > 0 && req.body.titulo.length > 0) {
+        conectado.query(`UPDATE SERVICIOS SET titulo = ?, descripcion = ?, imagen = ? WHERE idtipocita = ${req.body.id}`, [req.body.titulo, req.body.desc, `/images/${req.body.titulo.replaceAll(' ', '_')}.jpg`], (error, results) => {
+            if (error) {
+                console.error(error);
+            }
+            res.redirect('/admin.html');
+        });
+
+    }
+    else if (req.body.id == 0 && req.body.titulo.length > 0) {
+        conectado.query('INSERT INTO servicios (titulo, descripcion, imagen) VALUES (?, ?, ?)', [req.body.titulo, req.body.desc, `/images/${req.body.titulo.replaceAll(' ', '_')}.jpg`], (error, results) => {
+            if (error) {
+                console.error(error);
+            }
+            res.redirect('/admin.html');
+        }
+        );
+
     }
     else {
-        conectado.query('INSERT INTO servicios set = ?', { titulo: req.body.titulo, descripcion: req.body.desc, imagen: `/images/${req.body.titulo}` }, (error, results) => {
-            res.redirect('/admin.html')
-        })
+        res.redirect('/admin.html')
     }
+});
+
+router.get('/eliminar', async (req, res) => {
+
+    conectado.query('DELETE FROM servicios WHERE idtipocita = ?', [req.query.idser], (error, results) => {
+        if (error) {
+            console.log(error)
+        }
+        res.redirect('/admin.html')
+    });
+
+
 });
 
 router.get('/inicio.html', async (req, res) => {
@@ -122,7 +177,6 @@ router.get('/admin.html', async (req, res) => {
     //res.sendFile('/views/servicios.html', { root: rootdir })
 
     conectado.query('SELECT * FROM servicios', (error, results) => {
-        console.log(results)
         if (error || results.length == 0) {
             console.log('error')
             res.render(path.join(rootdir, 'views/admin.html'), {
@@ -160,7 +214,7 @@ router.get('/agenda', async (req, res) => {
     }
     else {
         conectado.query('SELECT * FROM cita INNER JOIN servicios ON cita.tipocita_idtipocita = servicios.idtipocita WHERE usuarios_idusuarios = ?', [req.session.iduser], (error, results) => {
-            console.log(results)
+
             console.log(error)
             if (error || results.length == 0) {
                 console.log('error')
@@ -188,7 +242,7 @@ router.get('/eventos', async (req, res) => {
     const year = req.query.year
     const month = req.query.month
     conectado.query('SELECT * FROM cita WHERE usuarios_idusuarios = ?', [req.session.iduser], (error, results) => {
-        console.log(results)
+
         if (error || results.length == 0) {
             console.log('error')
             res.render(path.join(rootdir, 'views/agenda.html'), {
@@ -231,7 +285,7 @@ router.get('/servicios.html', async (req, res) => {
         hreflog = '/usuario.html';
 
         conectado.query('SELECT * FROM servicios', (error, results) => {
-            console.log(results)
+
             if (error || results.length == 0) {
 
                 res.render(path.join(rootdir, 'views/servicios.html'), {

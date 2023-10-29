@@ -131,4 +131,5 @@ dist
 
 src/public/clinicaEstetica
 zip
+*.zip
 DbEstetica.mwb
